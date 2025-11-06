@@ -8,17 +8,18 @@ import (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Server", "Go")
+
 	w.Write([]byte("Hello there! Welcome to Job Apple"))
 }
 
 func jobAppView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
-	if err != nil {
+	if err != nil || id < 1 {
 		http.NotFound(w, r)
 		return
 	}
-	msg := fmt.Sprintf("Display a specific job applicaiton with ID %d", id)
-	w.Write([]byte(msg))
+	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
 }
 
 func jobAppCreate(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +27,7 @@ func jobAppCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func jobAppCreatePost(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(201)
+	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("Save a new snippet"))
 }
 
