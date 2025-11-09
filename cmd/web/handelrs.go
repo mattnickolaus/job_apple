@@ -6,7 +6,17 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
+
+type JobApplication struct {
+	Company     string
+	Title       string
+	DateApplied time.Time
+	Link        string
+	Status      string
+	LastUpdated time.Time
+}
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "Go")
@@ -24,7 +34,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = ts.ExecuteTemplate(w, "base", nil)
+	data := []JobApplication{
+		{"NASA", "Software Engineer 1", time.Now(), "https://nasa.gov", "Submitted", time.Now()},
+		{"NASA", "Software Engineer 1", time.Now(), "https://nasa.gov", "Submitted", time.Now()},
+		{"NASA", "Software Engineer 1", time.Now(), "https://nasa.gov", "Submitted", time.Now()},
+	}
+
+	err = ts.ExecuteTemplate(w, "base", data)
 	if err != nil {
 		log.Print(err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

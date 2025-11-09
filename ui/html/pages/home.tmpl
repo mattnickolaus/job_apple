@@ -1,6 +1,30 @@
 {{define "title"}}Home{{end}}
 
 {{define "main"}}
-    <h2>Latest Snippets</h2>
+    <h2>Applications</h2>
     <p>There's nothing to see here yet!</p>
+    <table>
+	    <thead>
+		<tr>
+		    <th>Company</th>
+		    <th>Title</th>
+		    <th>Date Applied</th>
+		    <th>Link</th>
+		    <th>Status</th>
+		    <th>Last Updated</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{{range .}}
+		<tr>
+		    <td>{{.Company}}</td>
+		    <td>{{.Title}}</td>
+		    <td>{{.DateApplied.Format "01/02/2006"}}</td>
+		    <td><a target="_blank" href={{.Link}}>Link</a></td>
+		    <td>{{.Status}}</td>
+		    <td>{{.LastUpdated.Format "01/02/2006"}}</td>
+		</tr>
+		{{end}}
+	    </tbody>
+	</table>
 {{end}}
